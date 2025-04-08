@@ -1,0 +1,23 @@
+.dropdown-container {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    position: relative; /* Ensure dropdown respects its container */
+}
+
+.dropdown {
+    margin-top: 5px;
+    padding: 8px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #333;
+    z-index: 1; /* Ensure dropdown stays below the header */
+}
+
+.dropdown:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}

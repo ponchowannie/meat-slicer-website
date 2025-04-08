@@ -1,0 +1,37 @@
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: fixed; /* Make the header fixed at the top */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* Ensure the header is above other elements */
+  }
+  
+.app-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+  
+.app-menu ul {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+    margin: 0;
+    padding: 0;
+}
+
+.app-menu a {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+}
+
+.app-menu a:hover {
+    text-decoration: underline;
+}

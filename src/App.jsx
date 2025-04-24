@@ -14,6 +14,7 @@ function App() {
   const [errorMessage, setErrorMessage] = useState(""); // State for the error message
 
   useEffect(() => {
+    // Fetch initial point cloud data
     const fetchData = async () => {
       try {
         const response = await axios.get("http://127.0.0.1:5000/get_point_cloud");
@@ -29,6 +30,33 @@ function App() {
     };
 
     fetchData();
+
+    // Set up Server-Sent Events (SSE) connection
+    const evtSource = new EventSource("http://127.0.0.1:5000/events");
+
+    evtSource.onmessage = (event) => {
+      try {
+        const updatedData = JSON.parse(event.data); // Parse the incoming data
+        console.log("Received event data:", data);
+        if (Array.isArray(updatedData) && updatedData.length > 0) {
+          setData(updatedData); // Update the point cloud data
+          console.log("Received updated point cloud data:", updatedData);
+        } else {
+          console.log("Received empty or invalid data, ignoring:", updatedData);
+        }
+      } catch (error) {
+        console.error("Error parsing SSE message:", error);
+      }
+    };
+
+    evtSource.onerror = (error) => {
+      console.error("SSE connection error:", error);
+      evtSource.close(); // Close the connection on error
+    };
+
+    return () => {
+      evtSource.close(); // Cleanup SSE connection on component unmount
+    };
   }, []);
 
   const handleCut = async () => {

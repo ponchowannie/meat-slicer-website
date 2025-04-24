@@ -36,6 +36,11 @@ const calculatePlanePositions = (center, slices, axis) => {
 
 export default function PointCloud({ data, slices, axis }) {
   const positions = useMemo(() => {
+    if (!Array.isArray(data)) {
+      console.error("PointCloud received non-array data:", data);
+      return new Float32Array();
+    }
+
     const scale = 1;
     const arr = new Float32Array(data.length * 3);
     data.forEach((point, i) => {
@@ -47,7 +52,7 @@ export default function PointCloud({ data, slices, axis }) {
   }, [data]);
 
   const center = useMemo(() => {
-    if (data.length === 0) return [0, 0, 0];
+    if (!Array.isArray(data) || data.length === 0) return [0, 0, 0];
 
     const { xMin, xMax, yMin, yMax, zMin, zMax } = data.reduce(
       (acc, point) => ({

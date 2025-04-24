@@ -1,9 +1,10 @@
 // filepath: /Users/poncho/Public/Coding/meat-slicer-website/src/utils/api.js
 import axios from "axios";
+import config from "../config";
 
 export const sendSlicingRequest = async (axis, slices) => {
   try {
-    const response = await axios.post("http://127.0.0.1:5000/slice", {
+    const response = await axios.post(`${config.baseUrl}:${config.backendPort}/slice`, {
       axis,
       slices,
     });

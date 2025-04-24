@@ -5,6 +5,7 @@ import PointCloud from "./components/PointCloud";
 import Dropdown from "./components/Dropdown";
 import Header from "./components/Header";
 import { sendSlicingRequest } from "./utils/api"; // Import the utility function
+import config from "./config"; // Import the configuration file
 
 function App() {
   const [data, setData] = useState([]);
@@ -17,7 +18,7 @@ function App() {
     // Fetch initial point cloud data
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:5000/get_point_cloud");
+        const response = await axios.get(`${config.baseUrl}:${config.backendPort}/get_point_cloud`);
         if (Array.isArray(response.data)) {
           setData(response.data);
           console.log(response.data);
@@ -32,7 +33,7 @@ function App() {
     fetchData();
 
     // Set up Server-Sent Events (SSE) connection
-    const evtSource = new EventSource("http://127.0.0.1:5000/events");
+    const evtSource = new EventSource(`${config.baseUrl}:${config.ssePort}/events`);
 
     evtSource.onmessage = (event) => {
       try {
